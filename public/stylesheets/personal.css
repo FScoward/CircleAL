@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+div#live_info {
+	display: none;
+}
+div.clearfix label, div.input, span.help-inline, span.help-block {
+	display: -moz-inline-box;
+	display: inline-block;
+}
+/* 入力フォーム */
+ul#live_info_form {
+	 position: relative;
+	 margin: 0;
+	 padding: 0;
+	 list-style: none;
+}
+ul#live_info_form li {
+  padding: 3px 0;
+}
+ul#live_info_form li label {
+  position: absolute;
+}
+ul#live_info_form input {
+  margin-left: 5em;
+}

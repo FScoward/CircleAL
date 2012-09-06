@@ -1,0 +1,74 @@
+@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String)(implicit request: RequestHeader)
+@import helper._
+@import helper.twitterBootstrap._
+
+<!-- DBからリスト取得 -->
+
+@main("Welcome to xxxx", username) {
+
+<script type="text/javascript">
+		var ws = new WebSocket("@routes.PersonalPageController.test.webSocketURL()");
+		ws.onmessage = function(evt){
+			$("#live_info").append(evt.data);
+		}
+</script>
+
+
+<div class="container" style="background-color: white">
+視聴中のアニメや、参加予定のライブを入力！
+<br>
+		<div class="row">
+				<div class="span8 offset2">
+						<div id="schedule">
+						近々の予定を表示<br>
+		## ライブスケジュール ##<br>
+		xx/xx sphere 神奈川県民ホール<br>
+		yy/yy idol master<br>
+						</div>
+				</div>
+		</div>
+		<br>
+
+		<div class="row">
+				<!-- 左側（メニュー） -->
+				<!-- <div id="animelist" class="span2" style="background-color:lightyellow"> -->
+				<div id="animelist" class="span2">
+						<!-- インプットをdivで隠して、登録ボタンを押した時に画面中央に表示させる? -->
+						<ul class="nav nav-list">
+							<li class="nav-header">MenuList</li>
+							<li><a href="javascript:void(0);" onClick="show_live();return false;">ライブ予定</a></li>
+							<li><a href="javascript:void(0);" onclick="show_anime();return false;">アニメリスト</a></li>
+						</ul>
+				</div>
+				
+				<!-- メイン -->
+				<div class="span10">
+						ライブ予定をクリックした場合はライブ予定を
+						アニメリストをクリックした場合はアニメリストを表示<br>
+						<div id="live_info">
+						<!-- 
+						<form class="form-inline">
+						<fieldset>
+							<ul id="live_info_form">
+								<li>@inputText(LiveInfoForm("date"), '_label -> "Date")</li>
+								<li>@inputText(LiveInfoForm("live_name"), '_label -> "live_name")</li>
+								<li><input type="button" class="btn primary" value="Send" onclick="ws.send($('#date').val())"/></li>
+							</ul>
+						</fieldset>
+						</form>
+						 -->
+						 <div class="form-inline">
+						 	<input type="date" name="date" id="date" class="input-small" value="@LiveInfoForm("date").value" placeholder="DATE" />
+						 	<input type="text" name="live_name" id="live_name" class="input-xxlarge" value="@LiveInfoForm("live_name").value" placeholder="live" />
+						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>'+ $('#live_name').val())">
+						 </div>
+						 <br/>
+						</div>
+						<div id="anime_list">
+							anime_list
+						</div>
+				</div>
+		</div>
+</div>
+
+}

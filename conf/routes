@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index
+GET     /login                      controllers.LoginController.login
+POST    /login                      controllers.LoginController.logincheck
+GET     /logoff                     controllers.LoginController.logoff
+GET     /auth                       controllers.Twitter4jController.authenticate
+GET     /test                       controllers.PersonalPageController.test
+GET     /login/:username            controllers.PersonalPageController.personal(username)
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,26 @@
+html,body {
+	height: 100%;
+}
+div#back{
+	background-color: whitesmoke;
+	height: 100%;
+}
+div.container {
+    -webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+    -moz-border-radius: 10px;   /* Firefox用 */ 
+	padding: 10px;
+}
+div#schedule {
+	border-style: double;
+	border-color: orange;
+    -webkit-border-radius: 15px;    /* Safari,Google Chrome用 */  
+    -moz-border-radius: 15px;   /* Firefox用 */ 
+	padding: 10px;
+}
+span.help-block {
+	/* display: inline; */
+	font-size: xx-small;
+}
+span.help-inline {
+	color: red;
+}

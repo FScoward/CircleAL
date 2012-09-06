@@ -1,0 +1,20 @@
+@(loginForm: Form[models.Login])
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Welcome to Play 2.0", "") {
+
+<div class="span4 offset4">
+@helper.form(action = routes.LoginController.logincheck) {
+	<fieldset>
+		<legend>LOGIN</legend>
+		@inputText(loginForm("username"), 'label -> "username", '_error -> loginForm.globalError)
+		@inputPassword(loginForm("password"), 'label -> "password", '_help -> "パスワード入力")
+	</fieldset>
+
+	<input type="submit" class="btn btn-success" value="ログイン">
+}
+
+</div>
+	
+}

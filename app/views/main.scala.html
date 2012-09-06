@@ -1,0 +1,57 @@
+@(title: String, username: String)(content: Html)
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/personal.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+		<script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
+		<script src="@routes.Assets.at("javascripts/personal.js")"></script>
+    </head>
+    <body>
+		<div id="back">
+
+				<div class="container">
+				<!-- ナビゲーションバー -->
+						<div class="navbar">
+								<div class="navbar-inner">
+										<ul class="nav">
+											<a class="brand" href="@{routes.Application.index}">CircleAL</a>
+											<li class="active">
+											@if(username.nonEmpty){
+													<a href="@{routes.PersonalPageController.personal(username)}">@username</a>
+											} else {
+													<a href="@{routes.Application.index}">HOME</a>
+											}
+											</li>
+											
+										</ul>
+										<!-- 右寄せ -->
+										<ul class="nav pull-right">
+											<li>
+											@if(username.nonEmpty){
+											<a href="@{routes.LoginController.logoff}">ログオフ</a>
+											} else {
+												<!-- <a href="@{routes.LoginController.login}">ログイン</a> -->
+												<a href="@{routes.Twitter4jController.authenticate}">ログイン</a>
+											}
+											<!-- TODO:ログイン状態であればログオフに表示変更 -->
+											</li>
+										</ul>
+								</div>
+						</div>
+				</div>
+
+				<div class="container" style="background-color: white">
+						@content
+				<!-- End container -->
+				</div>
+		<!-- End back -->
+		</div>
+
+    </body>
+</html>

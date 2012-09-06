@@ -1,0 +1,9 @@
+create table users (
+	name		varchar(32),
+	password	text
+);
+
+insert into users values (
+	'guest'
+	'guest'
+);
