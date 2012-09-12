@@ -24,7 +24,6 @@ object Twitter4jController extends Controller {
   def authenticate = Action { request =>
     
     twitter = twitterFactory.getInstance
-    // twitter.setOAuthConsumer(CONSUMERKEY, CONSUMERSECRET)
 
     try{
       // リクエストトークン取得
@@ -33,16 +32,12 @@ object Twitter4jController extends Controller {
       Cache.set("RequestToken", requestToken)
       Cache.set("Twitter", twitter)
       
-      /*
-      val accessToken = twitter.getOAuthAccessToken(requestToken)
-      confbuilder.setOAuthAccessToken(accessToken.toString())
-      */
       // 認証ページへ遷移
       Redirect(requestToken.getAuthorizationURL)
       
     }catch{
       case _ => {
-        Redirect(routes.Application.index)//.withSession("username" -> "aaa")
+        Redirect(routes.Application.index)
       }
     }
   }
@@ -60,7 +55,6 @@ object Twitter4jController extends Controller {
       
       try{
         val requestToken = Cache.get("RequestToken").get.asInstanceOf[RequestToken]
-        //accessToken = twitter.getOAuthAccessToken(requestToken, _oauth_verifier)
         accessToken = twitter.getOAuthAccessToken(requestToken)
       }catch{
         case _ => //Cache.set("username", "a")
@@ -83,25 +77,5 @@ object Twitter4jController extends Controller {
 
   def logoffTwitter = {}
 
-  /*
-  def getUser(oauth_verifier: String) = {
-    val twitter = Cache.get("Twitter").asInstanceOf[Twitter]
-    var accessToken: AccessToken = null
-    try{
-      accessToken = twitter.getOAuthAccessToken(Cache.get("RequestToken").asInstanceOf[RequestToken], oauth_verifier)
-    }catch{
-      case _ => Redirect(routes.Application.index)
-    }
-
-    if(accessToken != null){
-      try{
-        val username = twitter.getScreenName
-        Cache.set("username", username)
-      }catch{
-        case _ => Redirect(routes.Application.index)
-      }
-    }
-  }
-  */
 
 }
