@@ -21,9 +21,9 @@ object Application extends Controller {
       /* TODO
        * DB にユーザ名で作成されているか確認
        * 登録がなければテーブルにユーザ作成
-       *
-       *
        * */
+       import database._
+       Users.entry(username)
 
       url = views.html.personal(PersonalPageController.animeListForm, PersonalPageController.liveInfoForm, username)
     }

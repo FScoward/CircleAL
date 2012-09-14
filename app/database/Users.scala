@@ -8,7 +8,8 @@ import org.scalaquery.ql.extended.H2Driver.Implicit._
 import org.scalaquery.session.Database
 import org.scalaquery.session._
 import org.scalaquery.ql.basic.BasicDriver.Implicit._
-
+import org.postgresql.util.PSQLException
+// セッションの暗黙的解決
 //import org.scalaquery.session.Database.threadLocalSession
 
 /*
@@ -24,12 +25,19 @@ object Users extends ExtendedTable[(String)]("USER") {
   lazy val db = Database.forDataSource(DB.getDataSource())
 
   // DBへの登録
-  def entry(_name: String) = db.withSession { implicit db: Session =>
-  	Users.insert(_name)
+  def entry(_name: String) = db.withSession { implicit session: Session =>
+  	try{
+	  	Users.insert(_name)
+  	} catch {
+  		case e: PSQLException => "既に登録済みIDです"
+  		case _ => "データベースへの登録に失敗しました"
+  	}
   }
 
   // 登録済か確認
-  def isEntry = db.withSession { implicit db: Session =>
+  def isEntry(_name: String) = db.withSession { session: Session =>
+  	val res = Users.where(_.name is _name)
+  	res.exists
   }
 
 
