@@ -59,12 +59,15 @@
 
 
 						 <!-- TODO:チェックボックスをつけて削除出来るようにする -->
+						 <legend>入力フォーム</legend>
 						 <div class="form-inline">
 						 	<input type="date" name="date" id="date" class="input-small" value="@LiveInfoForm("date").value" placeholder="DATE" />
-						 	<input type="text" name="artist" id="artist" class="input-small" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
-						 	<input type="text" name="place" id="place" class="input-large" value="@LiveInfoForm("place").value" placeholder="会場" />
-						 	<input type="text" name="comment" id="comment" class="input-large" value="@LiveInfoForm("comment").value" placeholder="コメント" />
-						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>'+ $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())">
+						 	<input type="text" name="live_name" id="live_name" class="input-medium" value="@LiveInfoForm("live_name").value" placeholder="ライブ/ツアー名">
+						 	<input type="text" name="artist" id="artist" class="input-medium" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
+						 	<input type="text" name="place" id="place" class="input-medium" value="@LiveInfoForm("place").value" placeholder="会場" />
+						 	<br>
+						 	<input type="text" name="comment" id="comment" class="input-xxlarge" value="@LiveInfoForm("comment").value" placeholder="コメント" />
+						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>' + $('#live_name').val() + '<>' + $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())">
 						 </div>
 						 <br/>
 						</div>

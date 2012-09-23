@@ -8,13 +8,4 @@ import org.scalaquery.session.Database.threadLocalSession
 import java.text.DateFormat
 
 // フォーム定義
-case class LiveList(date: Date, artist: String, place: String, comment: String)
-
-object Live_CRUD {
-  def create = {
-
-  }
-  def read = {}
-  def update = {}
-  def delete = {}
-}
+case class LiveList(_date: Date, _live_name: String, _artist: String, _place: String, _comment: String)

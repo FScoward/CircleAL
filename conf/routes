@@ -8,7 +8,7 @@ GET     /login                      controllers.LoginController.login
 POST    /login                      controllers.LoginController.logincheck
 GET     /logoff                     controllers.LoginController.logoff
 GET     /auth                       controllers.Twitter4jController.authenticate
-GET     /test                       controllers.PersonalPageController.test
+GET     /ws                         controllers.PersonalPageController.test
 GET     /login/:username            controllers.PersonalPageController.personal(username)
 
 

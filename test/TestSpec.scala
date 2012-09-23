@@ -15,6 +15,7 @@ class TestSpec extends Specification {
 	}
 	*/
 
+
 	"test" in {
 		running(FakeApplication()){
 			val result = controllers.Application.index()(FakeRequest())
@@ -24,4 +25,5 @@ class TestSpec extends Specification {
 		}
 		
 	}
+	
 }

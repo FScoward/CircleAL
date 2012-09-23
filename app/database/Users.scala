@@ -16,10 +16,13 @@ import org.postgresql.util.PSQLException
 	db withSesssion {} 
 	db withTransaction {}
 	｛｝の中で処理を行う
+
+  AutoInc で自動的に数字を入れてくれる
 */
-object Users extends ExtendedTable[(String)]("USER") {
+object Users extends ExtendedTable[(Int, String)]("USER") {
+  def userID = column[Int]("userID", O AutoInc)
   def name = column[String]("name", O NotNull)
-  def * = name
+  def * = userID ~ name
 
   // Play2で定義した接続情報からScalaQueryのDatabaseを生成
   lazy val db = Database.forDataSource(DB.getDataSource())
@@ -27,7 +30,7 @@ object Users extends ExtendedTable[(String)]("USER") {
   // DBへの登録
   def entry(_name: String) = db.withSession { implicit session: Session =>
   	try{
-	  	Users.insert(_name)
+    	name.insert(_name)
   	} catch {
   		case e: PSQLException => "既に登録済みIDです"
   		case _ => "データベースへの登録に失敗しました"
