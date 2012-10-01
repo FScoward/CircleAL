@@ -1,4 +1,4 @@
-@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String)(implicit request: RequestHeader)
+@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String, info: Vector[models.LiveList])(implicit request: RequestHeader)
 @import helper._
 @import helper.twitterBootstrap._
 
@@ -35,7 +35,7 @@
 						<!-- インプットをdivで隠して、登録ボタンを押した時に画面中央に表示させる? -->
 						<ul class="nav nav-list">
 							<li class="nav-header">MenuList</li>
-							<li><a href="javascript:void(0);" onclick="show_anime();return false;">アニメリスト</a></li>
+							<!-- <li><a href="javascript:void(0);" onclick="show_anime();return false;">アニメリスト</a></li> -->
 							<li><a href="javascript:void(0);" onClick="show_live();return false;">ライブ予定</a></li>
 						</ul>
 				</div>
@@ -59,14 +59,27 @@
 
 
 						 <!-- TODO:チェックボックスをつけて削除出来るようにする -->
+						 <!-- <legend>入力フォーム</legend> -->
+						 <!-- モーダルウィンドウに書き換える　http://dotinstall.com/lessons/basic_twitter_bootstrap_v3/8817 -->
 						 <div class="form-inline">
 						 	<input type="date" name="date" id="date" class="input-small" value="@LiveInfoForm("date").value" placeholder="DATE" />
-						 	<input type="text" name="artist" id="artist" class="input-small" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
-						 	<input type="text" name="place" id="place" class="input-large" value="@LiveInfoForm("place").value" placeholder="会場" />
-						 	<input type="text" name="comment" id="comment" class="input-large" value="@LiveInfoForm("comment").value" placeholder="コメント" />
-						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>'+ $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())">
+						 	<input type="text" name="live_name" id="live_name" class="input-medium" value="@LiveInfoForm("live_name").value" placeholder="ライブ/ツアー名">
+						 	<input type="text" name="artist" id="artist" class="input-medium" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
+						 	<input type="text" name="place" id="place" class="input-medium" value="@LiveInfoForm("place").value" placeholder="会場" />
+						 	<br>
+						 	<input type="text" name="comment" id="comment" class="input-xxlarge" value="@LiveInfoForm("comment").value" placeholder="コメント" />
+						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>' + $('#live_name').val() + '<>' + $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())">
 						 </div>
 						 <br/>
+
+						 @{if(!info.isEmpty){
+							 info.foreach{ i =>
+							 	i
+							 }
+						 }
+						 }
+						 @info.isEmpty
+
 						</div>
 						<div id="anime_list">
 							anime_list

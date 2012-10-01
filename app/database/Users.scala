@@ -4,10 +4,11 @@ import play.api.db._
 import play.api.Play.current
 import org.scalaquery.ql._
 import org.scalaquery.ql.extended.ExtendedTable
-import org.scalaquery.ql.extended.H2Driver.Implicit._
+//import org.scalaquery.ql.extended.H2Driver.Implicit._
+import org.scalaquery.ql.extended.PostgresDriver.Implicit._
 import org.scalaquery.session.Database
 import org.scalaquery.session._
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
+//import org.scalaquery.ql.basic.BasicDriver.Implicit._
 import org.postgresql.util.PSQLException
 // セッションの暗黙的解決
 //import org.scalaquery.session.Database.threadLocalSession
@@ -30,7 +31,9 @@ object Users extends ExtendedTable[(Int, String)]("USER") {
   // DBへの登録
   def entry(_name: String) = db.withSession { implicit session: Session =>
   	try{
-    	name.insert(_name)
+  	  if(searchUserID(_name) > 0){
+  	    name.insert(_name)
+  	  }
   	} catch {
   		case e: PSQLException => "既に登録済みIDです"
   		case _ => "データベースへの登録に失敗しました"
@@ -41,6 +44,17 @@ object Users extends ExtendedTable[(Int, String)]("USER") {
   def isEntry(_name: String) = db.withSession { session: Session =>
   	val res = Users.where(_.name is _name)
   	res.exists
+  }
+
+  // username をもとに userID 取得
+  def searchUserID(_name: String) = db.withSession { implicit session: Session =>
+    val sel = 
+      for(
+        list <- Users
+        if list.name is _name
+      ) yield list.userID
+
+      sel.first()
   }
 
 

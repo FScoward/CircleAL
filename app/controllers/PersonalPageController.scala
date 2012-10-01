@@ -34,10 +34,10 @@ object PersonalPageController extends Controller {
     val username = Cache.get("username").getOrElse("").asInstanceOf[String]
 
     if (username.nonEmpty) {
-      /*
-      DB からデータ読み込み
-      */
-      Ok(views.html.personal(animeListForm, liveInfoForm, username))
+      // DB からデータ読み込み
+      val userID = database.Users.searchUserID(username)
+      val info_vector = database.User_Live.read(userID)
+      Ok(views.html.personal(animeListForm, liveInfoForm, username, info_vector))
     } else {
       Unauthorized("Error")
     }
@@ -83,10 +83,11 @@ object PersonalPageController extends Controller {
         DB へ登録
         */
         // 日付変換 String -> java.sql.date
-        if (database.LiveLists.entry(live_name, artist, java.sql.Date.valueOf(date), place) == false) {
-          //send = "<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>&times;</button>Error: (考えられる理由)既に登録済み</div>"
-        }else{
-          
+        if (database.LiveLists.entry(live_name, artist, java.sql.Date.valueOf(date), place, comment) == false) {
+          // send = "<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>&times;</button>Error: (考えられる理由)既に登録済み</div>"
+          database.LiveLists.correlate(live_name, artist, java.sql.Date.valueOf(date), place, comment)
+        } else {
+          database.LiveLists.correlate(live_name, artist, java.sql.Date.valueOf(date), place, comment)
         }
 
         out.push(send)

@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
-div#live_info {
+div#anime_list {
 	display: none;
 }
 div.clearfix label, div.input, span.help-inline, span.help-block {
