@@ -7,3 +7,4 @@ tmp
 dist
 app/controllers/Twitter4jController.scala
 app/controllers/TwitterController.scala
+.class

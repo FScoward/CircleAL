@@ -32,8 +32,12 @@ object LiveLists extends ExtendedTable[(Int, String, String, java.sql.Date, Stri
     var flag = false
 
     try {
-      // 登録
-      live_name ~ artist ~ date ~ place insert (_live_name, _artist, _date, _place)
+      if (searchLiveID(_live_name, _artist, _date, _place) > 0) {
+
+      } else {
+        // 登録
+        live_name ~ artist ~ date ~ place insert (_live_name, _artist, _date, _place)
+      }
 
       flag = true
     } catch {
@@ -67,7 +71,11 @@ object LiveLists extends ExtendedTable[(Int, String, String, java.sql.Date, Stri
         list <- LiveLists if list.live_name is _live_name if list.artist is _artist if list.date is _date if list.place is _place
       ) yield list.liveID
 
-    sel.first()
+      try{
+	    sel.first()
+      }catch{
+        case e: NoSuchElementException => -1
+      }
   }
 
   /*
@@ -82,4 +90,12 @@ object LiveLists extends ExtendedTable[(Int, String, String, java.sql.Date, Stri
     query.list
   }
 
+  def soon = {
+    // 現在日付取得
+
+    // テーブルから現在日付に近い分を数件取得
+
+    // return
+
+  }
 }

@@ -30,9 +30,9 @@ object User_Live extends ExtendedTable[(Int, Int, String)]("USER_LIVE") {
   }
 
   /*
-	 * 一覧作成
-	 * (Int) -> (Vector[(String, String, java.sql.Date, String)])
-	 * */
+   * 一覧作成
+   * (Int) -> (Vector[(String, String, java.sql.Date, String)])
+   * */
   def read(_userID: Int) = db.withSession { implicit session: Session =>
     // userIDからライブIDを引っ張る
     val queryLiveID = User_Live.where(_.userID === _userID) map {

@@ -32,6 +32,8 @@ object Users extends ExtendedTable[(Int, String)]("USER") {
   def entry(_name: String) = db.withSession { implicit session: Session =>
   	try{
   	  if(searchUserID(_name) > 0){
+  	    
+  	  } else {
   	    name.insert(_name)
   	  }
   	} catch {
