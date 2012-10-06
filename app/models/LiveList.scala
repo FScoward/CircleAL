@@ -9,3 +9,5 @@ import java.text.DateFormat
 
 // フォーム定義
 case class LiveList(_date: Date, _live_name: String, _artist: String, _place: String, _comment: String)
+
+case class DataOfLiveLists(_date: Date, _live_name: String, _artist: String, _place: String, _comment: String, _userID: Int, _liveID: Int)

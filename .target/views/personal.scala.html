@@ -1,4 +1,4 @@
-@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String, info: Vector[models.LiveList])(implicit request: RequestHeader)
+@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String, info: Vector[models.DataOfLiveLists])(implicit request: RequestHeader)
 @import helper._
 @import helper.twitterBootstrap._
 
@@ -20,7 +20,8 @@
 		<div class="row">
 				<div class="span8 offset2">
 						<div id="schedule">
-						近々の予定を表示<br>
+						もっとも登録数の多いライブ予定を表示<br>
+						近々の予定も表示？<br>
 		## ライブスケジュール ##<br>
 		xx/xx sphere 神奈川県民ホール<br>
 		yy/yy idol master<br>
@@ -42,8 +43,10 @@
 
 				<!-- メイン -->
 				<div class="span10">
+				<!--
 						ライブ予定をクリックした場合はライブ予定を
 						アニメリストをクリックした場合はアニメリストを表示<br>
+						-->
 						<div id="live_info">
 						<!--
 						<form class="form-inline">
@@ -60,25 +63,75 @@
 
 						 <!-- TODO:チェックボックスをつけて削除出来るようにする -->
 						 <!-- <legend>入力フォーム</legend> -->
-						 <!-- モーダルウィンドウに書き換える　http://dotinstall.com/lessons/basic_twitter_bootstrap_v3/8817 -->
-						 <div class="form-inline">
-						 	<input type="date" name="date" id="date" class="input-small" value="@LiveInfoForm("date").value" placeholder="DATE" />
-						 	<input type="text" name="live_name" id="live_name" class="input-medium" value="@LiveInfoForm("live_name").value" placeholder="ライブ/ツアー名">
-						 	<input type="text" name="artist" id="artist" class="input-medium" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
-						 	<input type="text" name="place" id="place" class="input-medium" value="@LiveInfoForm("place").value" placeholder="会場" />
-						 	<br>
-						 	<input type="text" name="comment" id="comment" class="input-xxlarge" value="@LiveInfoForm("comment").value" placeholder="コメント" />
-						 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>' + $('#live_name').val() + '<>' + $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())">
+						 <div align="center">
+						 <a href="#formModal" class="btn btn-info" data-toggle="modal">登録フォーム表示</a>
 						 </div>
+						 <div id="formModal" class="modal hide fade">
+							 <div class="modal-header" style="background-color: #98fb98">
+							 	<a href="#" class="close" data-dismiss="modal">&times;</a>
+							 	<h4>登録フォーム</h4>
+							 </div>
+							 <div class="modal-body" style="margin:10px">
+								 <!-- <div class="form-inline"> -->
+								 <form class="form-horizontal">
+								 	<div class="control-group">
+								 		<label class="control-label" for="date">日付</label>
+								 		<div class="controls">
+										 	<input type="date" name="date" id="date" value="@LiveInfoForm("date").value" placeholder="DATE" />
+								 		</div>
+								 	</div>
+								 	<div class="control-group">
+								 		<label class="control-label" for="live_name">ライブ/ツアー名</label>
+								 		<div class="controls">
+										 	<input type="text" name="live_name" id="live_name" value="@LiveInfoForm("live_name").value" placeholder="ライブ/ツアー名">
+								 		</div>
+								 	</div>
+								 	<div class="control-group">
+								 		<label class="control-label" for="artist">アーティスト名</label>
+								 		<div class="controls">
+										 	<input type="text" name="artist" id="artist" value="@LiveInfoForm("artist").value" placeholder="アーティスト名" />
+								 		</div>
+								 	</div>
+								 	<div class="control-group">
+								 		<label class="control-label" for="place">会場</label>
+								 		<div class="controls">
+										 	<input type="text" name="place" id="place" value="@LiveInfoForm("place").value" placeholder="会場" />
+								 		</div>
+								 	</div>
+								 	<div class="control-group">
+								 		<label class="control-label" for="comment">コメント</label>
+								 		<div class="controls">
+										 	<input type="text" name="comment" id="comment" value="@LiveInfoForm("comment").value" placeholder="コメント" />
+								 		</div>
+								 	</div>
+								 </form>
+							 </div>
+							 <div class="modal-footer">
+								 	<input type="submit" value="登録" class="btn" onclick="ws.send($('#date').val() + '<>' + $('#live_name').val() + '<>' + $('#artist').val() + '<>' + $('#place').val() + '<>' + $('#comment').val())" data-dismiss="modal">
+								 <!-- </div> -->
+							 </div>
+						 </div>
+
 						 <br/>
 
-						 @{if(!info.isEmpty){
-							 info.foreach{ i =>
-							 	i
-							 }
+						 @if(!info.isEmpty){
+				 			<blockquote style='background-color: aliceblue;'>
+					 		@for(x <- info){
+					 			@x._date
+					 			<p><span class='badge badge-info'>ライブ/ツアー名</span> 
+					 			@x._live_name
+					 			<span class='badge badge-important'>アーティスト</span> 
+					 			@x._artist
+					 			<span class='badge badge-warning'>会場</span> 
+					 			@x._place
+					 			<small><span class='badge badge-success'>コメント</span>
+					 			@x._comment
+					 			</small></p>
+					 			<br>
+					 		}
+				 			</blockquotes>
+				 			<br/>
 						 }
-						 }
-						 @info.isEmpty
 
 						</div>
 						<div id="anime_list">

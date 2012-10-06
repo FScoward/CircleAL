@@ -92,10 +92,19 @@ object LiveLists extends ExtendedTable[(Int, String, String, java.sql.Date, Stri
 
   def soon = {
     // 現在日付取得
-
+    
     // テーブルから現在日付に近い分を数件取得
 
     // return
 
+  }
+  
+  /*
+   * USER_LIVEの紐付けを削除
+   * */
+  def delete(_userID: Int, _liveID: Int) = db.withSession { implicit session: Session =>
+    //val query = User_Live.where(ul => (ul.userID ===_userID) && (ul.liveID ===_liveID)).exists
+    val query = User_Live.where(ul => (ul.userID ===_userID) && (ul.liveID ===_liveID))
+    query.delete
   }
 }

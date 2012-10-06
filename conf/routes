@@ -10,6 +10,7 @@ GET     /logoff                     controllers.LoginController.logoff
 GET     /auth                       controllers.Twitter4jController.authenticate
 GET     /ws                         controllers.PersonalPageController.test
 GET     /login/:username            controllers.PersonalPageController.personal(username)
+POST    /delete                     controllers.PersonalPageController.delete
 
 
 # Map static resources from the /public folder to the /assets URL path

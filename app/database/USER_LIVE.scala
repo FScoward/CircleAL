@@ -45,14 +45,16 @@ object User_Live extends ExtendedTable[(Int, Int, String)]("USER_LIVE") {
     val ite = liveIDList.iterator
 
     //var vec = Vector.empty[(String, String, java.sql.Date, String, String)]
-    var vec = Vector.newBuilder[models.LiveList]
+    // var vec = Vector.newBuilder[models.LiveList]
+    var vec = Vector.newBuilder[models.DataOfLiveLists]
 
     ite.foreach(list => {
       val query = LiveLists.where(_.liveID === list._1) map {
-        live => live.live_name ~ live.artist ~ live.date ~ live.place
+        live => live.live_name ~ live.artist ~ live.date ~ live.place ~ live.liveID
       }
       val info = query.first
-      vec += new models.LiveList(info._3, info._1, info._2, info._4, list._2)
+      
+      vec += new models.DataOfLiveLists(info._3, info._1, info._2, info._4, list._2, _userID,  info._5)
     })
     vec.result
   }

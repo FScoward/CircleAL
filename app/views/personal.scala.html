@@ -1,4 +1,4 @@
-@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String, info: Vector[models.LiveList])(implicit request: RequestHeader)
+@(AnimeListForm: Form[models.AnimeList], LiveInfoForm: Form[models.LiveList], username: String, info: Vector[models.DataOfLiveLists])(implicit request: RequestHeader)
 @import helper._
 @import helper.twitterBootstrap._
 
@@ -115,7 +115,6 @@
 						 <br/>
 
 						 @if(!info.isEmpty){
-
 				 			<blockquote style='background-color: aliceblue;'>
 					 		@for(x <- info){
 					 			@x._date
@@ -128,10 +127,17 @@
 					 			<small><span class='badge badge-success'>コメント</span>
 					 			@x._comment
 					 			</small></p>
+					 			<!-- button userID と liveID を持たせてDBから削除する -->
+					 			<div align="right">
+					 				<form action="/delete" method="POST">
+					 					<input type="hidden" name="_userID" value=@x._userID>
+					 					<input type="hidden" name="_liveID" value=@x._liveID>
+							 			<input type="submit" value=" 削 除 " class="btn btn-danger btn-small" />
+						 			</form>
+					 			</div>
 					 			<br>
 					 		}
 				 			</blockquotes>
-				 			<br/>
 						 }
 
 						</div>

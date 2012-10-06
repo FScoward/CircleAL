@@ -99,6 +99,15 @@ object PersonalPageController extends Controller {
 
     (in, out)
   }
+  
+  def delete = Action { implicit request =>
+    // POST から値を取得
+    def _userID = request.body.asFormUrlEncoded.get("_userID")(0)
+    def _liveID = request.body.asFormUrlEncoded.get("_liveID")(0)
+    
+    database.LiveLists.delete(_userID.toInt, _liveID.toInt)
+    Redirect("/")
+  }
 
 }
 
