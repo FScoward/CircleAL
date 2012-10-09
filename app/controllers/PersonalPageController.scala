@@ -50,14 +50,20 @@ object PersonalPageController extends Controller {
     val in = Iteratee.foreach[String] { message =>
       val say = message.split("<>")
 
-      var live_name, artist, date, place, comment = ""
+      var live_name, artist, place, comment = ""
+      var date: java.sql.Date = null
 
       val length = say.length
 
       if (length >= 4) {
         // 日付チェック
 
-        date = say(0)
+        try{
+	      date = java.sql.Date.valueOf(say(0))  
+        }catch{
+          case e: IllegalArgumentException => date = java.sql.Date.valueOf("1990-01-01")
+        }
+        
         live_name = say(1)
         artist = say(2)
         place = say(3)
@@ -83,11 +89,11 @@ object PersonalPageController extends Controller {
         DB へ登録
         */
         // 日付変換 String -> java.sql.date
-        if (database.LiveLists.entry(live_name, artist, java.sql.Date.valueOf(date), place, comment) == false) {
+        if (database.LiveLists.entry(live_name, artist, date, place, comment) == false) {
           // send = "<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>&times;</button>Error: (考えられる理由)既に登録済み</div>"
-          database.LiveLists.correlate(live_name, artist, java.sql.Date.valueOf(date), place, comment)
+          database.LiveLists.correlate(live_name, artist, date, place, comment)
         } else {
-          database.LiveLists.correlate(live_name, artist, java.sql.Date.valueOf(date), place, comment)
+          database.LiveLists.correlate(live_name, artist, date, place, comment)
         }
 
         out.push(send)

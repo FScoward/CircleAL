@@ -14,10 +14,10 @@
 </script>
 
 
-<div class="container" style="background-color: white">
+<div class="container-fluid" style="background-color: white">
 視聴中のアニメや、参加予定のライブを入力！
 <br>
-		<div class="row">
+		<div class="row-fluid">
 				<div class="span8 offset2">
 						<div id="schedule">
 						もっとも登録数の多いライブ予定を表示<br>
@@ -30,7 +30,7 @@
 		</div>
 		<br>
 
-		<div class="row">
+		<div class="row-fluid">
 				<!-- 左側（メニュー） -->
 				<div id="animelist" class="span2">
 						<!-- インプットをdivで隠して、登録ボタンを押した時に画面中央に表示させる? -->
@@ -120,17 +120,27 @@
 					 			@x._date
 					 			<p><span class='badge badge-info'>ライブ/ツアー名</span> 
 					 			@x._live_name
+					 			<br/>
 					 			<span class='badge badge-important'>アーティスト</span> 
 					 			@x._artist
+					 			<br/>
 					 			<span class='badge badge-warning'>会場</span> 
 					 			@x._place
+					 			<br/>
 					 			<small><span class='badge badge-success'>コメント</span>
 					 			@x._comment
 					 			</small></p>
-					 			<br>
+					 			<!-- button userID と liveID を持たせてDBから削除する -->
+					 			<div align="right">
+					 				<form action="/delete" method="POST">
+					 					<input type="hidden" name="_userID" value=@x._userID>
+					 					<input type="hidden" name="_liveID" value=@x._liveID>
+							 			<input type="submit" value=" 削 除 " class="btn btn-danger btn-small" />
+						 			</form>
+					 			</div>
+					 			<hr>
 					 		}
 				 			</blockquotes>
-				 			<br/>
 						 }
 
 						</div>
