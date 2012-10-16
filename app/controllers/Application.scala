@@ -11,9 +11,7 @@ import database.User_Live
 object Application extends Controller {
 
   def index = Action { implicit request =>
-
     Twitter4jController.getTwitUser
-
     val username = Cache.get("username").getOrElse("").asInstanceOf[String]
 
     var url = views.html.index(username)

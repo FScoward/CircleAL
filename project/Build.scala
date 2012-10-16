@@ -9,7 +9,7 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       // Add your project dependencies here,
-      "postgresql" % "postgresql" % "9.1-902.jdbc4",
+      "postgresql" % "postgresql" % "9.1-901.jdbc4",
       "org.twitter4j" % "twitter4j-core" % "2.2.6",
       "org.scalaquery" %% "scalaquery" % "0.10.0-M1"
     )
