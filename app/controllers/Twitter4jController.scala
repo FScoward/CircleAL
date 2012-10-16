@@ -77,5 +77,4 @@ object Twitter4jController extends Controller {
 
   def logoffTwitter = {}
 
-
 }
